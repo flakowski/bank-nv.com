@@ -187,8 +187,8 @@ const content = {
         body: "Hi, we have received your payment. Here is your insurance certificate.",
         read: true,
         attachment: {
-          name: 'VILKÅR OG BETINGELSER FOR PREMIUM DIAMANTFORSIKRING (beskyttet).pdf',
-          path: '/documents/VILK%C3%85R%20OG%20BETINGELSER%20FOR%20PREMIUM%20DIAMANTFORSIKRING%20(beskyttet).pdf',
+          name: 'TERMS AND CONDITIONS FOR PREMIUM DIAMOND INSURANCE (protected).pdf',
+          path: '/documents/TERMS%20AND%20CONDITIONS%20FOR%20PREMIUM%20DIAMOND%20INSURANCE%20(protected).pdf',
         },
       },
     ] as Email[],
