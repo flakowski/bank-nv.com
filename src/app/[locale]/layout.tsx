@@ -9,7 +9,7 @@ import '../globals.css';
 const inter = Inter({ variable: '--font-inter', subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Northern View Savings Bank',
+  title: 'Nedre Vesterdal Savings Bank',
   description: 'Your local bank for over 80 years',
 };
 
