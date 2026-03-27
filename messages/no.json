@@ -2,8 +2,8 @@
   "nav": { "home": "Hjem", "about": "Om banken", "contact": "Kontakt" },
   "hero": {
     "welcome": "Velkommen til",
-    "title": "Northern View Savings Bank",
-    "message": "Vi i Northern View Sparebank er stolte av å ha vært din lokale bank i over 80 år! Personlig har jeg kun vært banksjef siden 2021, men jeg tar allikevel stolthet i å se vår lange tradisjon for å yte fremragende kundeservice til hver enkelt kunde, samt å være en betydelig støttespiller i lokalsamfunnet vårt.",
+    "title": "Nedre Vesterdal Savings Bank",
+    "message": "Vi i Nedre Vesterdal Sparebank er stolte av å ha vært din lokale bank i over 80 år! Personlig har jeg kun vært banksjef siden 2021, men jeg tar allikevel stolthet i å se vår lange tradisjon for å yte fremragende kundeservice til hver enkelt kunde, samt å være en betydelig støttespiller i lokalsamfunnet vårt.",
     "position": "Banksjef"
   },
   "services": {
@@ -17,11 +17,11 @@
   },
   "community": {
     "title": "Vi tror på å gi tilbake til lokalsamfunnet",
-    "intro": "Vi donerer 0,5 % av overskuddet tilbake til Northern View, fordi vi bryr oss.",
+    "intro": "Vi donerer 0,5 % av overskuddet tilbake til Nedre Vesterdal, fordi vi bryr oss.",
     "football": "Fotballdrakter",
-    "footballDesc": "Vi har sponset nye fotballdrakter til FC Northern View.",
+    "footballDesc": "Vi har sponset nye fotballdrakter til FC Nedre Vesterdal.",
     "theater": "Teatersal",
-    "theaterDesc": "Northern View Sparebank ble bedt om å sponse nye stoler til teatersalen, men måtte avslå. Vi kjøpte derimot mer enn 14 nye stoleovertrekk!",
+    "theaterDesc": "Nedre Vesterdal Sparebank ble bedt om å sponse nye stoler til teatersalen, men måtte avslå. Vi kjøpte derimot mer enn 14 nye stoleovertrekk!",
     "youth": "Ungdomsklubb",
     "youthDesc": "Ungdomsklubben på Stensrupsveien har fått to nye gitarer og nye cymbaler til trommesettet."
   },
@@ -31,11 +31,11 @@
     "btn": "Logg inn"
   },
   "about": {
-    "title": "Om Northern View Sparebank",
-    "history": "Northern View Sparebank har vært din lokale bank i over 80 år. Vi er stolte av vår lange tradisjon for å yte fremragende kundeservice og støtte lokalsamfunnet.",
+    "title": "Om Nedre Vesterdal Sparebank",
+    "history": "Nedre Vesterdal Sparebank har vært din lokale bank i over 80 år. Vi er stolte av vår lange tradisjon for å yte fremragende kundeservice og støtte lokalsamfunnet.",
     "values": "Vi tror på rettferdighet, lojalitet og fremragende service. På gjennomsnitt gir vi 0,5 % bedre renter enn Velvet Narrows Local Bank, og er generelt ansett som vennligere og betydelig bedre mennesker (kundeundersøkelse utført av NVB, 2019).",
     "communityTitle": "Samfunnsansvar",
-    "communityText": "Vi donerer 0,5 % av overskuddet tilbake til Northern View, fordi vi bryr oss. Vi sponser lokale aktiviteter, fra fotball til teater."
+    "communityText": "Vi donerer 0,5 % av overskuddet tilbake til Nedre Vesterdal, fordi vi bryr oss. Vi sponser lokale aktiviteter, fra fotball til teater."
   },
   "contact": {
     "title": "Kontakt oss",
