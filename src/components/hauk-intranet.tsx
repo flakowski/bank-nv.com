@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Link } from '@/i18n/navigation';
 
-type Tab = 'inbox' | 'sent' | 'deleted' | 'me' | 'documents';
+type Tab = 'inbox' | 'sent' | 'deleted' | 'news' | 'me' | 'documents';
 
 const inbox = [
   {
@@ -11,6 +11,9 @@ const inbox = [
     body: 'Hi, apologies for the delay, I am available at the time you suggested. Looking forward to the meeting!',
     read: true,
   },
+];
+
+const deleted = [
   {
     subject: 'About the budget for the next quarter',
     sender: 'Anders Persson',
@@ -51,9 +54,45 @@ const documents = [
   { name: 'Payslip - Eva Hetman.pdf', file: 'Løneseddel - Finn Krüver.pdf' },
 ];
 
+type EmailList = typeof inbox;
+
+function EmailListView({
+  emails,
+  folderLabel,
+  onSelect,
+}: {
+  emails: EmailList;
+  folderLabel: string;
+  onSelect: (i: number) => void;
+}) {
+  return (
+    <div className="bg-white border border-[#d0d0d0]">
+      {emails.length === 0 ? (
+        <p className="text-sm text-[#888] p-4">Ingen meldinger i {folderLabel.toLowerCase()}.</p>
+      ) : (
+        emails.map((email, i) => (
+          <div
+            key={i}
+            onClick={() => onSelect(i)}
+            className={`flex items-start gap-3 px-4 py-3 border-b border-[#d0d0d0] last:border-0 cursor-pointer hover:bg-[#f0f4fc] ${!email.read ? 'bg-[#f0f4fc]' : ''}`}
+          >
+            <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${!email.read ? 'bg-[#003087]' : 'bg-transparent'}`} />
+            <div className="flex-1 min-w-0">
+              <p className={`text-sm truncate ${!email.read ? 'font-bold' : 'font-medium'}`}>{email.subject}</p>
+              <p className="text-xs text-[#888] truncate">{email.sender}</p>
+            </div>
+          </div>
+        ))
+      )}
+    </div>
+  );
+}
+
 export default function HaukIntranet() {
   const [tab, setTab] = useState<Tab>('inbox');
-  const [selectedEmail, setSelectedEmail] = useState<number | null>(null);
+  const [selectedEmail, setSelectedEmail] = useState<{ list: EmailList; index: number } | null>(null);
+
+  const currentList = tab === 'inbox' ? inbox : tab === 'deleted' ? deleted : [];
 
   return (
     <div className="min-h-screen bg-[#f5f5f5]">
@@ -68,13 +107,13 @@ export default function HaukIntranet() {
         </div>
         <nav className="bg-[#001f5a] border-t border-white/10">
           <div className="max-w-5xl mx-auto px-4 flex gap-1">
-            {(['inbox', 'me', 'documents'] as Tab[]).map((t) => (
+            {(['inbox', 'news', 'me', 'documents'] as Tab[]).map((t) => (
               <button
                 key={t}
                 onClick={() => { setTab(t); setSelectedEmail(null); }}
-                className={`px-4 py-2 text-xs transition-colors ${tab === t ? 'bg-[#003087] text-white' : 'text-blue-200 hover:text-white'}`}
+                className={`px-4 py-2 text-xs transition-colors ${tab === t || (t === 'inbox' && (tab === 'sent' || tab === 'deleted')) ? 'bg-[#003087] text-white' : 'text-blue-200 hover:text-white'}`}
               >
-                {t === 'inbox' ? 'Mail' : t === 'me' ? 'Me' : 'Documents'}
+                {t === 'inbox' ? 'E-post' : t === 'news' ? 'Nyheter' : t === 'me' ? 'Meg' : 'Dokumenter'}
               </button>
             ))}
           </div>
@@ -82,57 +121,39 @@ export default function HaukIntranet() {
       </div>
 
       <div className="max-w-5xl mx-auto px-4 py-6">
-        {tab === 'inbox' && (
+        {/* Mail section */}
+        {(tab === 'inbox' || tab === 'sent' || tab === 'deleted') && (
           <div>
             {selectedEmail !== null ? (
               <div className="bg-white border border-[#d0d0d0] p-6">
                 <button onClick={() => setSelectedEmail(null)} className="text-[#003087] text-xs mb-4 hover:underline">← Tilbake til innboks</button>
-                <h2 className="font-bold text-base mb-1">{inbox[selectedEmail].subject}</h2>
-                <p className="text-xs text-[#888] mb-4">Fra: {inbox[selectedEmail].sender}</p>
-                <p className="text-sm text-[#333] leading-relaxed whitespace-pre-line">{inbox[selectedEmail].body}</p>
+                <h2 className="font-bold text-base mb-1">{selectedEmail.list[selectedEmail.index].subject}</h2>
+                <p className="text-xs text-[#888] mb-4">Fra: {selectedEmail.list[selectedEmail.index].sender}</p>
+                <p className="text-sm text-[#333] leading-relaxed whitespace-pre-line">{selectedEmail.list[selectedEmail.index].body}</p>
               </div>
             ) : (
               <div>
                 <div className="flex gap-4 mb-4">
-                  <button onClick={() => setTab('inbox')} className="text-xs font-semibold text-[#003087] border-b-2 border-[#003087] pb-1">Inbox</button>
-                  <button onClick={() => setTab('sent')} className="text-xs text-[#888] hover:text-[#003087]">Sent</button>
-                  <button onClick={() => setTab('deleted')} className="text-xs text-[#888] hover:text-[#003087]">Deleted</button>
+                  <button onClick={() => setTab('inbox')} className={`text-xs pb-1 ${tab === 'inbox' ? 'font-semibold text-[#003087] border-b-2 border-[#003087]' : 'text-[#888] hover:text-[#003087]'}`}>Innboks</button>
+                  <button onClick={() => setTab('sent')} className={`text-xs pb-1 ${tab === 'sent' ? 'font-semibold text-[#003087] border-b-2 border-[#003087]' : 'text-[#888] hover:text-[#003087]'}`}>Sendt</button>
+                  <button onClick={() => setTab('deleted')} className={`text-xs pb-1 ${tab === 'deleted' ? 'font-semibold text-[#003087] border-b-2 border-[#003087]' : 'text-[#888] hover:text-[#003087]'}`}>Slettet</button>
                 </div>
-                <div className="bg-white border border-[#d0d0d0]">
-                  {inbox.map((email, i) => (
-                    <div
-                      key={i}
-                      onClick={() => setSelectedEmail(i)}
-                      className={`flex items-start gap-3 px-4 py-3 border-b border-[#d0d0d0] last:border-0 cursor-pointer hover:bg-[#f0f4fc] ${!email.read ? 'bg-[#f0f4fc]' : ''}`}
-                    >
-                      <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${!email.read ? 'bg-[#003087]' : 'bg-transparent'}`} />
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between gap-2">
-                          <p className={`text-sm truncate ${!email.read ? 'font-bold' : 'font-medium'}`}>{email.subject}</p>
-                        </div>
-                        <p className="text-xs text-[#888] truncate">{email.sender}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                {tab === 'sent' ? (
+                  <p className="text-sm text-[#888] italic">Ingen sendte meldinger.</p>
+                ) : (
+                  <EmailListView
+                    emails={currentList}
+                    folderLabel={tab === 'inbox' ? 'Innboks' : 'Slettet'}
+                    onSelect={(i) => setSelectedEmail({ list: currentList, index: i })}
+                  />
+                )}
               </div>
             )}
           </div>
         )}
 
-        {tab === 'sent' && (
-          <div className="bg-white border border-[#d0d0d0] p-6 text-sm text-[#888]">Ingen sendte meldinger.</div>
-        )}
-
-        {tab === 'deleted' && (
-          <div>
-            <div className="flex gap-4 mb-4">
-              <button onClick={() => setTab('inbox')} className="text-xs text-[#888] hover:text-[#003087]">Inbox</button>
-              <button onClick={() => setTab('sent')} className="text-xs text-[#888] hover:text-[#003087]">Sent</button>
-              <button className="text-xs font-semibold text-[#003087] border-b-2 border-[#003087] pb-1">Deleted</button>
-            </div>
-            <p className="text-sm text-[#888] italic">Ingen slettede meldinger.</p>
-          </div>
+        {tab === 'news' && (
+          <div className="bg-white border border-[#d0d0d0] p-6 text-sm text-[#888]">Ingen nyheter.</div>
         )}
 
         {tab === 'me' && (
