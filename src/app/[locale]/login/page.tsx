@@ -24,7 +24,7 @@ export default function LoginPage() {
           date: '22.08.2021',
           title: 'OBS: Ny innloggingsmetode for intranett',
           author: 'Admin',
-          body: `Hei, kjære kolleger!\n\nVi har endelig implementert den nye sikre innloggingen for intranett levert av NVC.\n\nFor å få tilgang til dine personlige profiler på intranett, har vi måttet sette opp en midlertidig løsning. Her er en enkel veiledning:\n\n1. Ha ansattnummeret ditt og de fem siste sifrene i personnummeret ditt klare.\n2. Skriv inn følgende i nettleserens URL:\n   bank-nv.com/${locale}/login[ansattnummer][personnummer]\n3. Skriv inn ditt personlige passord når du blir bedt om det.\n\nEksempel:\nOla Nordmann, ansattnummer 001, de fem siste sifrene i personnummeret er 12345\nPersonlig intranetadresse:\nbank-nv.com/${locale}/login00112345`,
+          body: `Hei, kjære kolleger!\n\nVi har endelig implementert den nye sikre innloggingen for intranett levert av NVC.\n\nFor å få tilgang til dine personlige profiler på intranett, har vi måttet sette opp en midlertidig løsning. Her er en enkel veiledning:\n\n1. Ha ansattnummeret ditt og de fem siste sifrene i personnummeret ditt klare.\n2. Skriv inn følgende i nettleserens URL:\n   bank-nv-com.vercel.app/${locale}/login[ansattnummer][personnummer]\n3. Skriv inn ditt personlige passord når du blir bedt om det.\n\nEksempel:\nOla Nordmann, ansattnummer 001, de fem siste sifrene i personnummeret er 12345\nPersonlig intranetadresse:\nbank-nv-com.vercel.app/${locale}/login00112345`,
           comments: [
             {
               author: 'Karen Holm',
@@ -56,7 +56,7 @@ export default function LoginPage() {
           date: '22.08.2021',
           title: 'NOTE: New login method for the intranet',
           author: 'Admin',
-          body: `Hey, dear colleagues!\n\nWe've finally implemented the new secure login for the intranet delivered by NVC.\n\nTo access your personal profiles on the intranet, we've had to set up a temporary solution. Here's a simple guide:\n\n1. Have your employee number and the last five digits of your social security number ready.\n2. Enter the following in your browser's URL:\n   bank-nv.com/${locale}/login[employee number][social security number]\n3. Enter your personal password when prompted.\n\nExample:\nJohn Doe, employee number 001, the last five digits in his social security number are 12345\nPersonal intranet address:\nbank-nv.com/${locale}/login00112345`,
+          body: `Hey, dear colleagues!\n\nWe've finally implemented the new secure login for the intranet delivered by NVC.\n\nTo access your personal profiles on the intranet, we've had to set up a temporary solution. Here's a simple guide:\n\n1. Have your employee number and the last five digits of your social security number ready.\n2. Enter the following in your browser's URL:\n   bank-nv-com.vercel.app/${locale}/login[employee number][social security number]\n3. Enter your personal password when prompted.\n\nExample:\nJohn Doe, employee number 001, the last five digits in his social security number are 12345\nPersonal intranet address:\nbank-nv-com.vercel.app/${locale}/login00112345`,
           comments: [
             {
               author: 'Karen Holm',
@@ -141,7 +141,7 @@ export default function LoginPage() {
                 : 'Log in with your personal intranet address to access this section.'}
             </p>
             <p className="text-xs text-[#888] font-mono">
-              bank-nv.com/{locale}/login[{isNo ? 'ansattnr.' : 'employee no.'}][{isNo ? 'siste 5 siffer i fnr.' : 'last 5 digits of SSN'}]
+              bank-nv-com.vercel.app/{locale}/login[{isNo ? 'ansattnr.' : 'employee no.'}][{isNo ? 'siste 5 siffer i fnr.' : 'last 5 digits of SSN'}]
             </p>
           </div>
         )}
