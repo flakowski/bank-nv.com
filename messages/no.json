@@ -1,0 +1,52 @@
+{
+  "nav": { "home": "Hjem", "about": "Om banken", "contact": "Kontakt" },
+  "hero": {
+    "welcome": "Velkommen til",
+    "title": "Northern View Savings Bank",
+    "message": "Vi i Northern View Sparebank er stolte av å ha vært din lokale bank i over 80 år! Personlig har jeg kun vært banksjef siden 2021, men jeg tar allikevel stolthet i å se vår lange tradisjon for å yte fremragende kundeservice til hver enkelt kunde, samt å være en betydelig støttespiller i lokalsamfunnet vårt.",
+    "position": "Banksjef"
+  },
+  "services": {
+    "title": "Alt du trenger i din lokale bank",
+    "bank": "Bank",
+    "bankDesc": "Våre dyktige kunderådgivere vurderer dine behov og tilbyr deg den beste avtalen med de beste betingelsene.",
+    "funds": "Fond",
+    "fundsDesc": "Vi tilbyr et bredt utvalg av investeringsfond tilpasset din risikoprofil.",
+    "mortgage": "Boliglån",
+    "mortgageDesc": "Vi gir gjennomsnittlig 0,5 % bedre renter enn Velvet Narrows Local Bank."
+  },
+  "community": {
+    "title": "Vi tror på å gi tilbake til lokalsamfunnet",
+    "intro": "Vi donerer 0,5 % av overskuddet tilbake til Northern View, fordi vi bryr oss.",
+    "football": "Fotballdrakter",
+    "footballDesc": "Vi har sponset nye fotballdrakter til FC Northern View.",
+    "theater": "Teatersal",
+    "theaterDesc": "Northern View Sparebank ble bedt om å sponse nye stoler til teatersalen, men måtte avslå. Vi kjøpte derimot mer enn 14 nye stoleovertrekk!",
+    "youth": "Ungdomsklubb",
+    "youthDesc": "Ungdomsklubben på Stensrupsveien har fått to nye gitarer og nye cymbaler til trommesettet."
+  },
+  "intranet": {
+    "title": "For ansatte",
+    "subtitle": "Tilgang til intranett",
+    "btn": "Logg inn"
+  },
+  "about": {
+    "title": "Om Northern View Sparebank",
+    "history": "Northern View Sparebank har vært din lokale bank i over 80 år. Vi er stolte av vår lange tradisjon for å yte fremragende kundeservice og støtte lokalsamfunnet.",
+    "values": "Vi tror på rettferdighet, lojalitet og fremragende service. På gjennomsnitt gir vi 0,5 % bedre renter enn Velvet Narrows Local Bank, og er generelt ansett som vennligere og betydelig bedre mennesker (kundeundersøkelse utført av NVB, 2019).",
+    "communityTitle": "Samfunnsansvar",
+    "communityText": "Vi donerer 0,5 % av overskuddet tilbake til Northern View, fordi vi bryr oss. Vi sponser lokale aktiviteter, fra fotball til teater."
+  },
+  "contact": {
+    "title": "Kontakt oss",
+    "findUs": "Finn oss her",
+    "phone": "Telefon",
+    "email": "E-post",
+    "hours": "Åpningstider",
+    "monFri": "Man–Fre",
+    "saturday": "Lørdag",
+    "sunday": "Søndag",
+    "closed": "Stengt"
+  },
+  "footer": { "tagline": "Din lokale bank siden 1940-tallet", "contact": "Kontakt" }
+}

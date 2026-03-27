@@ -1,0 +1,48 @@
+{
+  "nav": { "home": "Home", "about": "About", "contact": "Contact" },
+  "hero": {
+    "welcome": "Welcome to",
+    "title": "Northern View Savings Bank",
+    "message": "We at Northern View Savings Bank are proud to have been your local bank for over 80 years! Personally, I have only been the bank manager since 2021, but I still take pride in seeing our long tradition of providing excellent customer service to each and every client, as well as being a significant supporter in our local community.",
+    "position": "Bank Manager"
+  },
+  "services": {
+    "title": "Everything you need in your local bank",
+    "bank": "Bank",
+    "bankDesc": "Our skilled customer advisors assess your needs and offer you the best deal with the best terms.",
+    "funds": "Funds",
+    "fundsDesc": "We offer a wide range of investment funds tailored to your risk profile.",
+    "mortgage": "Mortgage",
+    "mortgageDesc": "On average, we provide 0.5% better interest rates than the Velvet Narrows Local Bank."
+  },
+  "community": {
+    "title": "We believe in giving back to the local community",
+    "intro": "We donate 0.5% of our profits back to Northern View, because we care.",
+    "football": "Football Jerseys",
+    "footballDesc": "We've sponsored new football jerseys for FC Northern View.",
+    "theater": "Theater Hall",
+    "theaterDesc": "Northern View Savings Bank was asked to sponsor new chairs for the theater hall, but we had to decline. We did, however, purchase more than 14 new chair covers!",
+    "youth": "Youth Club",
+    "youthDesc": "The youth club on Stensrupsveien has received two new guitars and new cymbals for their drum set."
+  },
+  "intranet": { "title": "For employees", "subtitle": "Access intranet", "btn": "Log in" },
+  "about": {
+    "title": "About Northern View Savings Bank",
+    "history": "Northern View Savings Bank has been your local bank for over 80 years. We are proud of our long tradition of excellent customer service and community support.",
+    "values": "We believe in fairness, loyalty and outstanding service. On average, we provide 0.5% better interest rates than the Velvet Narrows Local Bank, and are generally considered to be friendlier and significantly better human beings (customer survey conducted by NVB, 2019).",
+    "communityTitle": "Community responsibility",
+    "communityText": "We donate 0.5% of our profits back to Northern View, because we care. We sponsor local activities, from football to theater."
+  },
+  "contact": {
+    "title": "Contact us",
+    "findUs": "You can find us here",
+    "phone": "Phone",
+    "email": "Email",
+    "hours": "Opening hours",
+    "monFri": "Mon–Fri",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "closed": "Closed"
+  },
+  "footer": { "tagline": "Your local bank since the 1940s", "contact": "Contact" }
+}
