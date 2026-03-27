@@ -3,7 +3,18 @@ import { useState } from 'react';
 import { Link } from '@/i18n/navigation';
 import { useLocale } from 'next-intl';
 
-type Tab = 'inbox' | 'sent' | 'deleted' | 'news' | 'me' | 'documents';
+type Tab = 'mail' | 'news' | 'me' | 'documents';
+type MailFolder = 'inbox' | 'sent' | 'deleted';
+
+type Email = {
+  subject: string;
+  body: string;
+  read: boolean;
+  attachment?: { name: string; path: string };
+} & (
+  | { sender: string; recipient?: never; cc?: never }
+  | { recipient: string; cc?: string; sender?: never }
+);
 
 const content = {
   no: {
@@ -11,11 +22,13 @@ const content = {
     tabs: { mail: 'E-post', news: 'Nyheter', me: 'Meg', documents: 'Dokumenter' },
     mailTabs: { inbox: 'Innboks', sent: 'Sendt', deleted: 'Slettet' },
     from: 'Fra:',
+    to: 'Til:',
+    cc: '— Kopi:',
     back: '← Tilbake til innboks',
-    noSent: 'Ingen sendte meldinger.',
+    noMessages: 'Ingen meldinger.',
     noNews: 'Ingen nyheter.',
-    noMessages: (folder: string) => `Ingen meldinger i ${folder.toLowerCase()}.`,
     profile: 'Min profil',
+    documentsTitle: 'Dokumenter',
     profileFields: [
       ['Navn', 'Hauk Bjerkedahl'],
       ['Stilling', 'Banksjef'],
@@ -25,7 +38,6 @@ const content = {
       ['Hovedkonto', '1550.33.69805'],
       ['Pårørende', '—'],
     ],
-    documentsTitle: 'Dokumenter',
     inbox: [
       {
         subject: 'Bekreftelse på foreslått møtetid',
@@ -33,7 +45,23 @@ const content = {
         body: 'Hei, beklager forsinkelsen, jeg er tilgjengelig på tidspunktet du foreslo. Ser frem til møtet!',
         read: true,
       },
-    ],
+    ] as Email[],
+    sent: [
+      {
+        subject: 'Hvor er opptaket med NATTVISJON???',
+        recipient: 'Nedre Vesterdal Cyber Security',
+        cc: 'Karen Holm',
+        body: 'Hallo!\n\nDere klarte bare å sende CCTV-opptaket fra hvelvet der alt er mørkt. Send den riktige filen med nattvisjon aktivert ASAP!!!!',
+        read: true,
+      },
+      {
+        subject: 'Fiks lysene på kontoret mitt',
+        recipient: 'Finn S. Krüver',
+        cc: 'Karen Holm',
+        body: 'Hei, Finn, jeg sitter og skriver dette i mørket. Kan du ta deg sammen og fikse de forbannede lysene mine???',
+        read: true,
+      },
+    ] as Email[],
     deleted: [
       {
         subject: 'Angående budsjettet for neste kvartal',
@@ -66,27 +94,29 @@ const content = {
         read: true,
       },
       {
-        subject: 'Her er forsikringen din',
+        subject: 'Vi har mottatt betalingen din',
         sender: 'NVI Forsikring AS',
-        body: 'Hei, her er forsikringen din. Du leter litt, så finner du sikkert den teksten.',
+        body: 'Hei, vi har mottatt betalingen din. Her er forsikringsbeviset ditt.',
         read: false,
         attachment: {
           name: 'VILKÅR OG BETINGELSER FOR PREMIUM DIAMANTFORSIKRING.pdf',
           path: '/documents/VILK%C3%85R%20OG%20BETINGELSER%20FOR%20PREMIUM%20DIAMANTFORSIKRING.pdf',
         },
       },
-    ],
+    ] as Email[],
   },
   en: {
     home: '← Home',
     tabs: { mail: 'Mail', news: 'News', me: 'Me', documents: 'Documents' },
     mailTabs: { inbox: 'Inbox', sent: 'Sent', deleted: 'Deleted' },
     from: 'From:',
+    to: 'To:',
+    cc: '— CC:',
     back: '← Back to inbox',
-    noSent: 'No sent messages.',
+    noMessages: 'No messages.',
     noNews: 'No news.',
-    noMessages: (folder: string) => `No messages in ${folder.toLowerCase()}.`,
     profile: 'My profile',
+    documentsTitle: 'Documents',
     profileFields: [
       ['Name', 'Hauk Bjerkedahl'],
       ['Position', 'Bank Manager'],
@@ -96,7 +126,6 @@ const content = {
       ['Main account', '1550.33.69805'],
       ['Next of kin', '—'],
     ],
-    documentsTitle: 'Documents',
     inbox: [
       {
         subject: 'Confirmation of the suggested meeting time',
@@ -104,7 +133,23 @@ const content = {
         body: 'Hi, apologies for the delay, I am available at the time you suggested. Looking forward to the meeting!',
         read: true,
       },
-    ],
+    ] as Email[],
+    sent: [
+      {
+        subject: 'Where is the footage with NIGHT VISION???',
+        recipient: 'Northern View Cyber Security',
+        cc: 'Karen Holm',
+        body: 'Hello!\n\nYou only managed to send the CCTV from the vault where everything is dark. Send the correct file with night vision activated ASAP!!!!',
+        read: true,
+      },
+      {
+        subject: 'Fix the lights in my office',
+        recipient: 'Finn S. Krüver',
+        cc: 'Karen Holm',
+        body: "Hi, Finn, I'm writing this whilst sitting in the dark. Can you get your act together and fix my damn lights???",
+        read: true,
+      },
+    ] as Email[],
     deleted: [
       {
         subject: 'About the budget for the next quarter',
@@ -127,7 +172,7 @@ const content = {
       {
         subject: 'Update regarding taxation rules',
         sender: 'Samuel Borg',
-        body: 'Hi, boss. I just wanted to give you a brief update about the stuff you had me look into regarding the new taxation rules. Do you have time for a meeting sometime soon?',
+        body: 'Hi, boss. I just wanted to give you a brief update about the stuff you had me look into regarding the new taxation rules. Do you have time for a meeting soon?',
         read: true,
       },
       {
@@ -137,16 +182,16 @@ const content = {
         read: true,
       },
       {
-        subject: 'Here is your insurance',
+        subject: 'We have received your payment',
         sender: 'NVI Insurance',
-        body: 'Hi, here\'s your insurance. Search a bit and you\'ll find the text.',
+        body: "Hi, we have received your payment. Here is your insurance certificate.",
         read: false,
         attachment: {
           name: 'VILKÅR OG BETINGELSER FOR PREMIUM DIAMANTFORSIKRING.pdf',
           path: '/documents/VILK%C3%85R%20OG%20BETINGELSER%20FOR%20PREMIUM%20DIAMANTFORSIKRING.pdf',
         },
       },
-    ],
+    ] as Email[],
   },
 };
 
@@ -161,10 +206,14 @@ const documents = [
 export default function HaukIntranet() {
   const locale = useLocale();
   const t = locale === 'no' ? content.no : content.en;
-  const [tab, setTab] = useState<Tab>('inbox');
-  const [selectedEmail, setSelectedEmail] = useState<{ list: typeof t.inbox; index: number } | null>(null);
+  const [tab, setTab] = useState<Tab>('mail');
+  const [folder, setFolder] = useState<MailFolder>('inbox');
+  const [selectedEmail, setSelectedEmail] = useState<{ list: Email[]; index: number } | null>(null);
 
-  const currentList = tab === 'inbox' ? t.inbox : tab === 'deleted' ? t.deleted : [];
+  const currentList: Email[] =
+    folder === 'inbox' ? t.inbox :
+    folder === 'sent' ? t.sent :
+    t.deleted;
 
   return (
     <div className="min-h-screen bg-[#f5f5f5]">
@@ -178,18 +227,13 @@ export default function HaukIntranet() {
         </div>
         <nav className="bg-[#001f5a] border-t border-white/10">
           <div className="max-w-5xl mx-auto px-4 flex gap-1">
-            {(['inbox', 'news', 'me', 'documents'] as Tab[]).map((tabKey) => (
+            {(['mail', 'news', 'me', 'documents'] as Tab[]).map((tabKey) => (
               <button
                 key={tabKey}
                 onClick={() => { setTab(tabKey); setSelectedEmail(null); }}
-                className={`px-4 py-2 text-xs transition-colors ${
-                  (tabKey === 'inbox' && (tab === 'inbox' || tab === 'sent' || tab === 'deleted')) ||
-                  tab === tabKey
-                    ? 'bg-[#003087] text-white'
-                    : 'text-blue-200 hover:text-white'
-                }`}
+                className={`px-4 py-2 text-xs transition-colors ${tab === tabKey ? 'bg-[#003087] text-white' : 'text-blue-200 hover:text-white'}`}
               >
-                {tabKey === 'inbox' ? t.tabs.mail : tabKey === 'news' ? t.tabs.news : tabKey === 'me' ? t.tabs.me : t.tabs.documents}
+                {tabKey === 'mail' ? t.tabs.mail : tabKey === 'news' ? t.tabs.news : tabKey === 'me' ? t.tabs.me : t.tabs.documents}
               </button>
             ))}
           </div>
@@ -197,16 +241,23 @@ export default function HaukIntranet() {
       </div>
 
       <div className="max-w-5xl mx-auto px-4 py-6">
-        {(tab === 'inbox' || tab === 'sent' || tab === 'deleted') && (
+        {tab === 'mail' && (
           <div>
             {selectedEmail !== null ? (
               <div className="bg-white border border-[#d0d0d0] p-6">
                 <button onClick={() => setSelectedEmail(null)} className="text-[#003087] text-xs mb-4 hover:underline">{t.back}</button>
                 <h2 className="font-bold text-base mb-1">{selectedEmail.list[selectedEmail.index].subject}</h2>
-                <p className="text-xs text-[#888] mb-4">{t.from} {selectedEmail.list[selectedEmail.index].sender}</p>
+                <p className="text-xs text-[#888] mb-4">
+                  {selectedEmail.list[selectedEmail.index].sender
+                    ? `${t.from} ${selectedEmail.list[selectedEmail.index].sender}`
+                    : `${t.to} ${(selectedEmail.list[selectedEmail.index] as {recipient: string}).recipient}`}
+                  {(selectedEmail.list[selectedEmail.index] as {cc?: string}).cc
+                    ? ` ${t.cc} ${(selectedEmail.list[selectedEmail.index] as {cc: string}).cc}`
+                    : ''}
+                </p>
                 <p className="text-sm text-[#333] leading-relaxed whitespace-pre-line mb-4">{selectedEmail.list[selectedEmail.index].body}</p>
-                {(selectedEmail.list[selectedEmail.index] as unknown as {attachment?: {name: string; path: string}}).attachment && (() => {
-                  const att = (selectedEmail.list[selectedEmail.index] as unknown as {attachment: {name: string; path: string}}).attachment;
+                {selectedEmail.list[selectedEmail.index].attachment && (() => {
+                  const att = selectedEmail.list[selectedEmail.index].attachment!;
                   return (
                     <a
                       href={att.path}
@@ -223,39 +274,37 @@ export default function HaukIntranet() {
             ) : (
               <div>
                 <div className="flex gap-4 mb-4">
-                  {(['inbox', 'sent', 'deleted'] as Tab[]).map((f) => (
+                  {(['inbox', 'sent', 'deleted'] as MailFolder[]).map((f) => (
                     <button
                       key={f}
-                      onClick={() => setTab(f)}
-                      className={`text-xs pb-1 ${tab === f ? 'font-semibold text-[#003087] border-b-2 border-[#003087]' : 'text-[#888] hover:text-[#003087]'}`}
+                      onClick={() => { setFolder(f); setSelectedEmail(null); }}
+                      className={`text-xs pb-1 ${folder === f ? 'font-semibold text-[#003087] border-b-2 border-[#003087]' : 'text-[#888] hover:text-[#003087]'}`}
                     >
                       {f === 'inbox' ? t.mailTabs.inbox : f === 'sent' ? t.mailTabs.sent : t.mailTabs.deleted}
                     </button>
                   ))}
                 </div>
-                {tab === 'sent' ? (
-                  <p className="text-sm text-[#888] italic">{t.noSent}</p>
-                ) : (
-                  <div className="bg-white border border-[#d0d0d0]">
-                    {currentList.length === 0 ? (
-                      <p className="text-sm text-[#888] p-4">{t.noMessages(tab === 'inbox' ? t.mailTabs.inbox : t.mailTabs.deleted)}</p>
-                    ) : (
-                      currentList.map((email, i) => (
-                        <div
-                          key={i}
-                          onClick={() => setSelectedEmail({ list: currentList, index: i })}
-                          className={`flex items-start gap-3 px-4 py-3 border-b border-[#d0d0d0] last:border-0 cursor-pointer hover:bg-[#f0f4fc] ${!email.read ? 'bg-[#f0f4fc]' : ''}`}
-                        >
-                          <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${!email.read ? 'bg-[#003087]' : 'bg-transparent'}`} />
-                          <div className="flex-1 min-w-0">
-                            <p className={`text-sm truncate ${!email.read ? 'font-bold' : 'font-medium'}`}>{email.subject}</p>
-                            <p className="text-xs text-[#888] truncate">{email.sender}</p>
-                          </div>
+                <div className="bg-white border border-[#d0d0d0]">
+                  {currentList.length === 0 ? (
+                    <p className="text-sm text-[#888] p-4">{t.noMessages}</p>
+                  ) : (
+                    currentList.map((email, i) => (
+                      <div
+                        key={i}
+                        onClick={() => setSelectedEmail({ list: currentList, index: i })}
+                        className={`flex items-start gap-3 px-4 py-3 border-b border-[#d0d0d0] last:border-0 cursor-pointer hover:bg-[#f0f4fc] ${!email.read ? 'bg-[#f0f4fc]' : ''}`}
+                      >
+                        <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${!email.read ? 'bg-[#003087]' : 'bg-transparent'}`} />
+                        <div className="flex-1 min-w-0">
+                          <p className={`text-sm truncate ${!email.read ? 'font-bold' : 'font-medium'}`}>{email.subject}</p>
+                          <p className="text-xs text-[#888] truncate">
+                            {email.sender ?? (email.recipient ? `${t.to} ${email.recipient}` : '')}
+                          </p>
                         </div>
-                      ))
-                    )}
-                  </div>
-                )}
+                      </div>
+                    ))
+                  )}
+                </div>
               </div>
             )}
           </div>

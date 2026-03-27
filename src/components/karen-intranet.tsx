@@ -36,14 +36,21 @@ const content = {
         body: 'Kjære Karen.\n\nJeg forstår fullt ut ønsket ditt om å pensjonere deg etter hendelsen med Hauk, og så denne greia med diamanten etterpå. Takk for alle de fantastiske årene vi har jobbet sammen, og nyt pensjonen din i Spania med Frode!',
         read: true,
       },
+    ],
+    sent: [],
+    deleted: [
+      {
+        subject: 'Kan du hjelpe oss å komme i kontakt med banksjefen?',
+        sender: 'Velvet Narrows Local Bank',
+        body: 'Hei, er du ikke sekretæren til Hauk Bjerkedahl? Vi har prøvd å invitere ham til en workshop, men vi har aldri fått svar. Kan du hjelpe oss å komme i kontakt med ham? Kanskje du kan sette opp et møte?',
+        read: true,
+      },
       {
         subject: 'Betalingsbekreftelse',
         sender: 'NVI Kundeservice',
         body: 'Hei. Vi bekrefter at vi har mottatt din betaling.',
         read: true,
       },
-    ],
-    sent: [
       {
         subject: 'Hvor er opptaket med NATTVISJON???',
         recipient: 'Nedre Vesterdal Cyber Security',
@@ -64,14 +71,6 @@ const content = {
         body: 'Hei, en pakke under transport venter på din handling. For å fullføre transporten av pakken din, trenger vi en liten betaling på 60 kr for forsendelsen, ellers vil pakken bli returnert til avsender. Vennligst send oss ditt VISA-kortnummer, utløpsdato og CVC-koden på baksiden av kortet for å bekrefte betalingen.',
         read: false,
         isPhishing: true,
-      },
-    ],
-    deleted: [
-      {
-        subject: 'Kan du hjelpe oss å komme i kontakt med banksjefen?',
-        sender: 'Velvet Narrows Local Bank',
-        body: 'Hei, er du ikke sekretæren til Hauk Bjerkedahl? Vi har prøvd å invitere ham til en workshop, men vi har aldri fått svar. Kan du hjelpe oss å komme i kontakt med ham? Kanskje du kan sette opp et møte?',
-        read: true,
       },
     ],
   },
@@ -105,14 +104,21 @@ const content = {
         body: 'Dear, Karen.\n\nI understand completely your desire to retire after the incident with Hauk, and then this thing with the diamond afterward. Thank you for all the wonderful years we\'ve worked together, and enjoy your retirement in Spain with Frode!',
         read: true,
       },
+    ],
+    sent: [],
+    deleted: [
+      {
+        subject: 'Could you help us get in touch with the bank manager?',
+        sender: 'Velvet Narrows Local Bank',
+        body: "Hi, aren't you the secretary of Hauk Bjerkedahl? We've been trying to invite him to a workshop, but we've never gotten an answer. Can you help us get in touch with him? Maybe you can set up a meeting?",
+        read: true,
+      },
       {
         subject: 'Payment Confirmation',
         sender: 'NVI Customer Service',
         body: "Hi. We're confirming that we've received your payment.",
         read: true,
       },
-    ],
-    sent: [
       {
         subject: 'Where is the footage with NIGHT VISION???',
         recipient: 'Northern View Cyber Security',
@@ -133,14 +139,6 @@ const content = {
         body: 'Hi, a package in transit is awaiting your action. In order to finalize the transportation of your package, we need a small payment of 60 kr for the shipment, or the package will be returned to the sender. Please send us your VISA card number, expiration date and the CVC-code on the back of your card in order to confirm your payment.',
         read: false,
         isPhishing: true,
-      },
-    ],
-    deleted: [
-      {
-        subject: 'Could you help us get in touch with the bank manager?',
-        sender: 'Velvet Narrows Local Bank',
-        body: "Hi, aren't you the secretary of Hauk Bjerkedahl? We've been trying to invite him to a workshop, but we've never gotten an answer. Can you help us get in touch with him? Maybe you can set up a meeting?",
-        read: true,
       },
     ],
   },
