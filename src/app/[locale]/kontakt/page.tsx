@@ -13,9 +13,9 @@ export default function ContactPage() {
           <div className="bg-white border border-[#d0d0d0] p-6">
             <h2 className="font-bold text-[#003087] mb-4">{t('findUs')}</h2>
             <address className="not-italic text-sm text-[#333] space-y-1">
-              <p className="font-semibold">Northern View Savings Bank</p>
+              <p className="font-semibold">{t('bankName')}</p>
               <p>Storgata 21</p>
-              <p>Northern View</p>
+              <p>{t('city')}</p>
               <p className="mt-3">{t('phone')}: 930 64 391</p>
               <p>{t('email')}: post@bank-nv.com</p>
             </address>

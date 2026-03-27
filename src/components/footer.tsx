@@ -3,6 +3,7 @@ import { Link } from '@/i18n/navigation';
 
 export default function Footer() {
   const t = useTranslations('footer');
+  const tHero = useTranslations('hero');
   return (
     <footer className="bg-[#003087] text-white mt-12">
       <div className="max-w-5xl mx-auto px-4 py-6">
@@ -10,7 +11,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-2 mb-2">
               <div className="bg-white text-[#003087] font-bold text-xs px-2 py-1 rounded">NVB</div>
-              <span className="font-semibold text-sm">Northern View Savings Bank</span>
+              <span className="font-semibold text-sm">{tHero('title')}</span>
             </div>
             <p className="text-xs text-blue-200">{t('tagline')}</p>
           </div>

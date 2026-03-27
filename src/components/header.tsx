@@ -11,6 +11,7 @@ const languageNames: Record<string, string> = {
 
 export default function Header() {
   const t = useTranslations('nav');
+  const tHero = useTranslations('hero');
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
@@ -21,7 +22,7 @@ export default function Header() {
       <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <div className="bg-white text-[#003087] font-bold text-xs px-2 py-1 rounded">NVB</div>
-          <span className="font-semibold text-sm hidden sm:block">Nedre Vesterdal Savings Bank</span>
+          <span className="font-semibold text-sm hidden sm:block">{tHero('title')}</span>
         </Link>
         <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
           <span className="text-xl">{menuOpen ? '✕' : '☰'}</span>
