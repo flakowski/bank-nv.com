@@ -45,24 +45,6 @@ const content = {
         body: 'Hei, beklager forsinkelsen, jeg er tilgjengelig på tidspunktet du foreslo. Ser frem til møtet!',
         read: true,
       },
-    ] as Email[],
-    sent: [
-      {
-        subject: 'Hvor er opptaket med NATTVISJON???',
-        recipient: 'Nedre Vesterdal Cyber Security',
-        cc: 'Karen Holm',
-        body: 'Hallo!\n\nDere klarte bare å sende CCTV-opptaket fra hvelvet der alt er mørkt. Send den riktige filen med nattvisjon aktivert ASAP!!!!',
-        read: true,
-      },
-      {
-        subject: 'Fiks lysene på kontoret mitt',
-        recipient: 'Finn S. Krüver',
-        cc: 'Karen Holm',
-        body: 'Hei, Finn, jeg sitter og skriver dette i mørket. Kan du ta deg sammen og fikse de forbannede lysene mine???',
-        read: true,
-      },
-    ] as Email[],
-    deleted: [
       {
         subject: 'Angående budsjettet for neste kvartal',
         sender: 'Anders Persson',
@@ -93,6 +75,24 @@ const content = {
         body: 'Hei. Vi ønsker å invitere deg til en workshop om bærekraftig investering. Dette vil være en flott mulighet til å lære mer om hvordan vi kan investere ansvarlig for fremtiden.',
         read: true,
       },
+    ] as Email[],
+    sent: [
+      {
+        subject: 'Hvor er opptaket med NATTVISJON???',
+        recipient: 'Nedre Vesterdal Cyber Security',
+        cc: 'Karen Holm',
+        body: 'Hallo!\n\nDere klarte bare å sende CCTV-opptaket fra hvelvet der alt er mørkt. Send den riktige filen med nattvisjon aktivert ASAP!!!!',
+        read: true,
+      },
+      {
+        subject: 'Fiks lysene på kontoret mitt',
+        recipient: 'Finn S. Krüver',
+        cc: 'Karen Holm',
+        body: 'Hei, Finn, jeg sitter og skriver dette i mørket. Kan du ta deg sammen og fikse de forbannede lysene mine???',
+        read: true,
+      },
+    ] as Email[],
+    deleted: [
       {
         subject: 'Vi har mottatt betalingen din',
         sender: 'NVI Forsikring AS',
@@ -133,24 +133,6 @@ const content = {
         body: 'Hi, apologies for the delay, I am available at the time you suggested. Looking forward to the meeting!',
         read: true,
       },
-    ] as Email[],
-    sent: [
-      {
-        subject: 'Where is the footage with NIGHT VISION???',
-        recipient: 'Northern View Cyber Security',
-        cc: 'Karen Holm',
-        body: 'Hello!\n\nYou only managed to send the CCTV from the vault where everything is dark. Send the correct file with night vision activated ASAP!!!!',
-        read: true,
-      },
-      {
-        subject: 'Fix the lights in my office',
-        recipient: 'Finn S. Krüver',
-        cc: 'Karen Holm',
-        body: "Hi, Finn, I'm writing this whilst sitting in the dark. Can you get your act together and fix my damn lights???",
-        read: true,
-      },
-    ] as Email[],
-    deleted: [
       {
         subject: 'About the budget for the next quarter',
         sender: 'Anders Persson',
@@ -181,6 +163,24 @@ const content = {
         body: 'Hello. We would like to invite you to a workshop on sustainable investing. This will be a great opportunity to learn more about how we can invest responsibly for the future.',
         read: true,
       },
+    ] as Email[],
+    sent: [
+      {
+        subject: 'Where is the footage with NIGHT VISION???',
+        recipient: 'Northern View Cyber Security',
+        cc: 'Karen Holm',
+        body: 'Hello!\n\nYou only managed to send the CCTV from the vault where everything is dark. Send the correct file with night vision activated ASAP!!!!',
+        read: true,
+      },
+      {
+        subject: 'Fix the lights in my office',
+        recipient: 'Finn S. Krüver',
+        cc: 'Karen Holm',
+        body: "Hi, Finn, I'm writing this whilst sitting in the dark. Can you get your act together and fix my damn lights???",
+        read: true,
+      },
+    ] as Email[],
+    deleted: [
       {
         subject: 'We have received your payment',
         sender: 'NVI Insurance',

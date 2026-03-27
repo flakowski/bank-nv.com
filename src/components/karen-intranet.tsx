@@ -36,9 +36,6 @@ const content = {
         body: 'Kjære Karen.\n\nJeg forstår fullt ut ønsket ditt om å pensjonere deg etter hendelsen med Hauk, og så denne greia med diamanten etterpå. Takk for alle de fantastiske årene vi har jobbet sammen, og nyt pensjonen din i Spania med Frode!',
         read: true,
       },
-    ],
-    sent: [],
-    deleted: [
       {
         subject: 'Kan du hjelpe oss å komme i kontakt med banksjefen?',
         sender: 'Velvet Narrows Local Bank',
@@ -73,6 +70,8 @@ const content = {
         isPhishing: true,
       },
     ],
+    sent: [],
+    deleted: [],
   },
   en: {
     home: '← Home',
@@ -104,9 +103,6 @@ const content = {
         body: 'Dear, Karen.\n\nI understand completely your desire to retire after the incident with Hauk, and then this thing with the diamond afterward. Thank you for all the wonderful years we\'ve worked together, and enjoy your retirement in Spain with Frode!',
         read: true,
       },
-    ],
-    sent: [],
-    deleted: [
       {
         subject: 'Could you help us get in touch with the bank manager?',
         sender: 'Velvet Narrows Local Bank',
@@ -141,6 +137,8 @@ const content = {
         isPhishing: true,
       },
     ],
+    sent: [],
+    deleted: [],
   },
 };
 
