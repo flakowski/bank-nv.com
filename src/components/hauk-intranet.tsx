@@ -1,50 +1,134 @@
 'use client';
 import { useState } from 'react';
 import { Link } from '@/i18n/navigation';
+import { useLocale } from 'next-intl';
 
 type Tab = 'inbox' | 'sent' | 'deleted' | 'news' | 'me' | 'documents';
 
-const inbox = [
-  {
-    subject: 'Confirmation of the suggested meeting time',
-    sender: 'Karl Storgård (NVC)',
-    body: 'Hi, apologies for the delay, I am available at the time you suggested. Looking forward to the meeting!',
-    read: true,
+const content = {
+  no: {
+    home: '← Hjem',
+    tabs: { mail: 'E-post', news: 'Nyheter', me: 'Meg', documents: 'Dokumenter' },
+    mailTabs: { inbox: 'Innboks', sent: 'Sendt', deleted: 'Slettet' },
+    from: 'Fra:',
+    back: '← Tilbake til innboks',
+    noSent: 'Ingen sendte meldinger.',
+    noNews: 'Ingen nyheter.',
+    noMessages: (folder: string) => `Ingen meldinger i ${folder.toLowerCase()}.`,
+    profile: 'Min profil',
+    profileFields: [
+      ['Navn', 'Hauk Bjerkedahl'],
+      ['Stilling', 'Banksjef'],
+      ['Telefon', '986 75 208'],
+      ['Adresse', 'Paradisveien 4'],
+      ['Postnr og by', '6970, Nedre Vesterdal'],
+      ['Hovedkonto', '1550.33.69805'],
+      ['Pårørende', '—'],
+    ],
+    documentsTitle: 'Dokumenter',
+    inbox: [
+      {
+        subject: 'Bekreftelse på foreslått møtetid',
+        sender: 'Karl Storgård (NVC)',
+        body: 'Hei, beklager forsinkelsen, jeg er tilgjengelig på tidspunktet du foreslo. Ser frem til møtet!',
+        read: true,
+      },
+    ],
+    deleted: [
+      {
+        subject: 'Angående budsjettet for neste kvartal',
+        sender: 'Anders Persson',
+        body: 'Jeg har gått gjennom budsjettet for neste kvartal, og vi må gjøre noen justeringer. Kan vi finne tid til å diskutere dette i morgen?',
+        read: false,
+      },
+      {
+        subject: 'Viktig oppdatering angående din konto!',
+        sender: 'Nedre Vesterdal Sparebank Kredittavdeling',
+        body: 'Hei, Hauk.\n\nDette gjelder alle dine ubetalte kredittkortregninger. Selv om du er banksjef, vil vi måtte sende dem til inkasso, eller i verste fall trekke i lønn inntil gjelden er betalt, dersom du ikke begynner å betale snart. Neste forfall er 45.590 kr, og vi ber om at dette gjøres opp innen 01.06.2024 dersom vi skal unnlate å sende det til inkasso.',
+        read: false,
+      },
+      {
+        subject: 'Re: Det er på høy tid at vi får henne til å slutte!',
+        sender: 'Henrik Jensen (HR)',
+        body: 'Jeg er svært bekymret over den siste utviklingen. Det er på tide at vi tar noen konkrete grep for å løse situasjonen. Har du noen anelse om hvor uheldig det var at du ba henne slutte ansikt til ansikt? Kan vi diskutere dette i dag?',
+        read: false,
+      },
+      {
+        subject: 'Oppdatering angående skatteregler',
+        sender: 'Samuel Borg',
+        body: 'Hei, sjef. Jeg ville bare gi deg en kort oppdatering om det du ba meg undersøke angående de nye skattereglene. Har du tid til et møte snart?',
+        read: true,
+      },
+      {
+        subject: 'Invitasjon: Workshop om bærekraftig investering',
+        sender: 'Velvet Narrows Local Bank',
+        body: 'Hei. Vi ønsker å invitere deg til en workshop om bærekraftig investering. Dette vil være en flott mulighet til å lære mer om hvordan vi kan investere ansvarlig for fremtiden.',
+        read: true,
+      },
+    ],
   },
-];
-
-const deleted = [
-  {
-    subject: 'About the budget for the next quarter',
-    sender: 'Anders Persson',
-    body: "I've gone through the budget for the next quarter, and we have to make some adjustments. Could we find the time to discuss this tomorrow?",
-    read: false,
+  en: {
+    home: '← Home',
+    tabs: { mail: 'Mail', news: 'News', me: 'Me', documents: 'Documents' },
+    mailTabs: { inbox: 'Inbox', sent: 'Sent', deleted: 'Deleted' },
+    from: 'From:',
+    back: '← Back to inbox',
+    noSent: 'No sent messages.',
+    noNews: 'No news.',
+    noMessages: (folder: string) => `No messages in ${folder.toLowerCase()}.`,
+    profile: 'My profile',
+    profileFields: [
+      ['Name', 'Hauk Bjerkedahl'],
+      ['Position', 'Bank Manager'],
+      ['Phone', '986 75 208'],
+      ['Address', 'Paradisveien 4'],
+      ['Zip and city', '6970, Northern View'],
+      ['Main account', '1550.33.69805'],
+      ['Next of kin', '—'],
+    ],
+    documentsTitle: 'Documents',
+    inbox: [
+      {
+        subject: 'Confirmation of the suggested meeting time',
+        sender: 'Karl Storgård (NVC)',
+        body: 'Hi, apologies for the delay, I am available at the time you suggested. Looking forward to the meeting!',
+        read: true,
+      },
+    ],
+    deleted: [
+      {
+        subject: 'About the budget for the next quarter',
+        sender: 'Anders Persson',
+        body: "I've gone through the budget for the next quarter, and we have to make some adjustments. Could we find the time to discuss this tomorrow?",
+        read: false,
+      },
+      {
+        subject: 'Important update regarding your account!',
+        sender: 'Northern View Savings Bank Credit Department',
+        body: "Hi, Hauk.\n\nThis is regarding all your unpaid credit card bills. Even if you're the bank manager, we will have to send them to the debt collector's office, or at the very worst, do pay cuts until the debt is paid, if you do not start paying soon. Your next payment due is 45.590 kr, and we request it to be settled before 01.06.2024 if we are to refrain from sending it to collections.",
+        read: false,
+      },
+      {
+        subject: "Re: It's about bloody time we make her quit!",
+        sender: 'Henrik Jensen (HR)',
+        body: "I am truly concerned about the recent developments. It's time we take some concrete measures to resolve the situation. Do you have any idea how unfortunate it is that you told her to quit, face to face? Can we discuss this today?",
+        read: false,
+      },
+      {
+        subject: 'Update regarding taxation rules',
+        sender: 'Samuel Borg',
+        body: 'Hi, boss. I just wanted to give you a brief update about the stuff you had me look into regarding the new taxation rules. Do you have time for a meeting sometime soon?',
+        read: true,
+      },
+      {
+        subject: 'Invitation: Workshop on Sustainable Investing',
+        sender: 'Velvet Narrows Local Bank',
+        body: 'Hello. We would like to invite you to a workshop on sustainable investing. This will be a great opportunity to learn more about how we can invest responsibly for the future.',
+        read: true,
+      },
+    ],
   },
-  {
-    subject: 'Important update regarding your account!',
-    sender: 'Northern View Savings Bank Credit Department',
-    body: "Hi, Hauk.\n\nThis is regarding all your unpaid credit card bills. Even if you're the bank manager, we will have to send them to the debt collector's office, or at the very worst, do pay cuts until the debt is paid, if you do not start paying soon. Your next payment due is 45.590 kr, and we request it to be settled before 01.06.2024 if we are to refrain from sending it to collections.",
-    read: false,
-  },
-  {
-    subject: "Re: It's about bloody time we make her quit!",
-    sender: 'Henrik Jensen (HR)',
-    body: "I am truly concerned about the recent developments. It's time we take some concrete measures to resolve the situation. Do you have any idea how unfortunate it is that you told her to quit, face to face? Can we discuss this today?",
-    read: false,
-  },
-  {
-    subject: 'Update regarding taxation rules',
-    sender: 'Samuel Borg',
-    body: 'Hi, boss. I just wanted to give you a brief update about the stuff you had me look into regarding the new taxation rules. Do you have time for a meeting sometime soon?',
-    read: true,
-  },
-  {
-    subject: 'Invitation: Workshop on Sustainable Investing',
-    sender: 'Velvet Narrows Local Bank',
-    body: 'Hello. We would like to invite you to a workshop on sustainable investing. This will be a great opportunity to learn more about how we can invest responsibly for the future.',
-    read: true,
-  },
-];
+};
 
 const documents = [
   { name: 'Payslip - Karen Holm.pdf', file: 'Løneseddel - Finn Krüver.pdf' },
@@ -54,66 +138,38 @@ const documents = [
   { name: 'Payslip - Eva Hetman.pdf', file: 'Løneseddel - Finn Krüver.pdf' },
 ];
 
-type EmailList = typeof inbox;
-
-function EmailListView({
-  emails,
-  folderLabel,
-  onSelect,
-}: {
-  emails: EmailList;
-  folderLabel: string;
-  onSelect: (i: number) => void;
-}) {
-  return (
-    <div className="bg-white border border-[#d0d0d0]">
-      {emails.length === 0 ? (
-        <p className="text-sm text-[#888] p-4">Ingen meldinger i {folderLabel.toLowerCase()}.</p>
-      ) : (
-        emails.map((email, i) => (
-          <div
-            key={i}
-            onClick={() => onSelect(i)}
-            className={`flex items-start gap-3 px-4 py-3 border-b border-[#d0d0d0] last:border-0 cursor-pointer hover:bg-[#f0f4fc] ${!email.read ? 'bg-[#f0f4fc]' : ''}`}
-          >
-            <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${!email.read ? 'bg-[#003087]' : 'bg-transparent'}`} />
-            <div className="flex-1 min-w-0">
-              <p className={`text-sm truncate ${!email.read ? 'font-bold' : 'font-medium'}`}>{email.subject}</p>
-              <p className="text-xs text-[#888] truncate">{email.sender}</p>
-            </div>
-          </div>
-        ))
-      )}
-    </div>
-  );
-}
-
 export default function HaukIntranet() {
+  const locale = useLocale();
+  const t = locale === 'no' ? content.no : content.en;
   const [tab, setTab] = useState<Tab>('inbox');
-  const [selectedEmail, setSelectedEmail] = useState<{ list: EmailList; index: number } | null>(null);
+  const [selectedEmail, setSelectedEmail] = useState<{ list: typeof t.inbox; index: number } | null>(null);
 
-  const currentList = tab === 'inbox' ? inbox : tab === 'deleted' ? deleted : [];
+  const currentList = tab === 'inbox' ? t.inbox : tab === 'deleted' ? t.deleted : [];
 
   return (
     <div className="min-h-screen bg-[#f5f5f5]">
-      {/* Intranet header */}
       <div className="bg-[#003087] text-white">
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="bg-white text-[#003087] font-bold text-xs px-2 py-1 rounded">NVB</div>
             <span className="font-semibold text-sm">NVB-Intranet</span>
           </div>
-          <Link href="/" className="text-xs text-blue-200 hover:text-white">← Hjem</Link>
+          <Link href="/" className="text-xs text-blue-200 hover:text-white">{t.home}</Link>
         </div>
         <nav className="bg-[#001f5a] border-t border-white/10">
           <div className="max-w-5xl mx-auto px-4 flex gap-1">
-            {(['inbox', 'news', 'me', 'documents'] as Tab[]).map((t) => (
+            {(['inbox', 'news', 'me', 'documents'] as Tab[]).map((tabKey) => (
               <button
-                key={t}
-                onClick={() => { setTab(t); setSelectedEmail(null); }}
-                className={`px-4 py-2 text-xs transition-colors ${tab === t || (t === 'inbox' && (tab === 'sent' || tab === 'deleted')) ? 'bg-[#003087] text-white' : 'text-blue-200 hover:text-white'}`}
+                key={tabKey}
+                onClick={() => { setTab(tabKey); setSelectedEmail(null); }}
+                className={`px-4 py-2 text-xs transition-colors ${
+                  (tabKey === 'inbox' && (tab === 'inbox' || tab === 'sent' || tab === 'deleted')) ||
+                  tab === tabKey
+                    ? 'bg-[#003087] text-white'
+                    : 'text-blue-200 hover:text-white'
+                }`}
               >
-                {t === 'inbox' ? 'E-post' : t === 'news' ? 'Nyheter' : t === 'me' ? 'Meg' : 'Dokumenter'}
+                {tabKey === 'inbox' ? t.tabs.mail : tabKey === 'news' ? t.tabs.news : tabKey === 'me' ? t.tabs.me : t.tabs.documents}
               </button>
             ))}
           </div>
@@ -121,31 +177,50 @@ export default function HaukIntranet() {
       </div>
 
       <div className="max-w-5xl mx-auto px-4 py-6">
-        {/* Mail section */}
         {(tab === 'inbox' || tab === 'sent' || tab === 'deleted') && (
           <div>
             {selectedEmail !== null ? (
               <div className="bg-white border border-[#d0d0d0] p-6">
-                <button onClick={() => setSelectedEmail(null)} className="text-[#003087] text-xs mb-4 hover:underline">← Tilbake til innboks</button>
+                <button onClick={() => setSelectedEmail(null)} className="text-[#003087] text-xs mb-4 hover:underline">{t.back}</button>
                 <h2 className="font-bold text-base mb-1">{selectedEmail.list[selectedEmail.index].subject}</h2>
-                <p className="text-xs text-[#888] mb-4">Fra: {selectedEmail.list[selectedEmail.index].sender}</p>
+                <p className="text-xs text-[#888] mb-4">{t.from} {selectedEmail.list[selectedEmail.index].sender}</p>
                 <p className="text-sm text-[#333] leading-relaxed whitespace-pre-line">{selectedEmail.list[selectedEmail.index].body}</p>
               </div>
             ) : (
               <div>
                 <div className="flex gap-4 mb-4">
-                  <button onClick={() => setTab('inbox')} className={`text-xs pb-1 ${tab === 'inbox' ? 'font-semibold text-[#003087] border-b-2 border-[#003087]' : 'text-[#888] hover:text-[#003087]'}`}>Innboks</button>
-                  <button onClick={() => setTab('sent')} className={`text-xs pb-1 ${tab === 'sent' ? 'font-semibold text-[#003087] border-b-2 border-[#003087]' : 'text-[#888] hover:text-[#003087]'}`}>Sendt</button>
-                  <button onClick={() => setTab('deleted')} className={`text-xs pb-1 ${tab === 'deleted' ? 'font-semibold text-[#003087] border-b-2 border-[#003087]' : 'text-[#888] hover:text-[#003087]'}`}>Slettet</button>
+                  {(['inbox', 'sent', 'deleted'] as Tab[]).map((f) => (
+                    <button
+                      key={f}
+                      onClick={() => setTab(f)}
+                      className={`text-xs pb-1 ${tab === f ? 'font-semibold text-[#003087] border-b-2 border-[#003087]' : 'text-[#888] hover:text-[#003087]'}`}
+                    >
+                      {f === 'inbox' ? t.mailTabs.inbox : f === 'sent' ? t.mailTabs.sent : t.mailTabs.deleted}
+                    </button>
+                  ))}
                 </div>
                 {tab === 'sent' ? (
-                  <p className="text-sm text-[#888] italic">Ingen sendte meldinger.</p>
+                  <p className="text-sm text-[#888] italic">{t.noSent}</p>
                 ) : (
-                  <EmailListView
-                    emails={currentList}
-                    folderLabel={tab === 'inbox' ? 'Innboks' : 'Slettet'}
-                    onSelect={(i) => setSelectedEmail({ list: currentList, index: i })}
-                  />
+                  <div className="bg-white border border-[#d0d0d0]">
+                    {currentList.length === 0 ? (
+                      <p className="text-sm text-[#888] p-4">{t.noMessages(tab === 'inbox' ? t.mailTabs.inbox : t.mailTabs.deleted)}</p>
+                    ) : (
+                      currentList.map((email, i) => (
+                        <div
+                          key={i}
+                          onClick={() => setSelectedEmail({ list: currentList, index: i })}
+                          className={`flex items-start gap-3 px-4 py-3 border-b border-[#d0d0d0] last:border-0 cursor-pointer hover:bg-[#f0f4fc] ${!email.read ? 'bg-[#f0f4fc]' : ''}`}
+                        >
+                          <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${!email.read ? 'bg-[#003087]' : 'bg-transparent'}`} />
+                          <div className="flex-1 min-w-0">
+                            <p className={`text-sm truncate ${!email.read ? 'font-bold' : 'font-medium'}`}>{email.subject}</p>
+                            <p className="text-xs text-[#888] truncate">{email.sender}</p>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
                 )}
               </div>
             )}
@@ -153,23 +228,15 @@ export default function HaukIntranet() {
         )}
 
         {tab === 'news' && (
-          <div className="bg-white border border-[#d0d0d0] p-6 text-sm text-[#888]">Ingen nyheter.</div>
+          <div className="bg-white border border-[#d0d0d0] p-6 text-sm text-[#888]">{t.noNews}</div>
         )}
 
         {tab === 'me' && (
           <div className="bg-white border border-[#d0d0d0] p-6 max-w-md">
-            <h2 className="font-bold text-[#003087] mb-4">Min profil</h2>
+            <h2 className="font-bold text-[#003087] mb-4">{t.profile}</h2>
             <table className="text-sm w-full">
               <tbody>
-                {[
-                  ['Navn', 'Hauk Bjerkedahl'],
-                  ['Stilling', 'Bank Manager'],
-                  ['Telefon', '986 75 208'],
-                  ['Adresse', 'Paradisveien 4'],
-                  ['Postnr og by', '6970, Northern View'],
-                  ['Hovedkonto', '1550.33.69805'],
-                  ['Pårørende', '—'],
-                ].map(([label, value]) => (
+                {t.profileFields.map(([label, value]) => (
                   <tr key={label} className="border-b border-[#d0d0d0]">
                     <td className="py-2 text-[#888] pr-4 whitespace-nowrap">{label}</td>
                     <td className="py-2 font-medium">{value}</td>
@@ -182,7 +249,7 @@ export default function HaukIntranet() {
 
         {tab === 'documents' && (
           <div className="bg-white border border-[#d0d0d0] p-6">
-            <h2 className="font-bold text-[#003087] mb-4">Dokumenter</h2>
+            <h2 className="font-bold text-[#003087] mb-4">{t.documentsTitle}</h2>
             <div className="space-y-2">
               {documents.map((doc, i) => (
                 <a
