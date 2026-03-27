@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { useLocale } from 'next-intl';
 
 interface PasswordGateProps {
   correctPassword: string;
@@ -8,6 +9,8 @@ interface PasswordGateProps {
 }
 
 export default function PasswordGate({ correctPassword, storageKey, children }: PasswordGateProps) {
+  const locale = useLocale();
+  const isNo = locale === 'no';
   const [authenticated, setAuthenticated] = useState(false);
   const [input, setInput] = useState('');
   const [error, setError] = useState(false);
@@ -43,24 +46,24 @@ export default function PasswordGate({ correctPassword, storageKey, children }: 
           <div className="bg-[#003087] text-white font-bold text-xs px-2 py-1 rounded">NVB</div>
           <span className="font-semibold text-sm">NVB-Intranet</span>
         </div>
-        <h2 className="text-base font-semibold mb-4 text-[#003087]">Logg inn</h2>
+        <h2 className="text-base font-semibold mb-4 text-[#003087]">{isNo ? 'Logg inn' : 'Log in'}</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs text-[#555] mb-1">Passord</label>
+            <label className="block text-xs text-[#555] mb-1">{isNo ? 'Passord' : 'Password'}</label>
             <input
               type="password"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Skriv inn passord"
+              placeholder={isNo ? 'Skriv inn passord' : 'Enter password'}
               className="w-full border border-[#d0d0d0] px-3 py-2 text-sm focus:outline-none focus:border-[#003087]"
             />
           </div>
-          {error && <p className="text-red-600 text-xs">Feil passord. Prøv igjen.</p>}
+          {error && <p className="text-red-600 text-xs">{isNo ? 'Feil passord. Prøv igjen.' : 'Wrong password. Try again.'}</p>}
           <button
             type="submit"
             className="w-full bg-[#003087] text-white text-sm py-2 hover:bg-[#001f5a] transition-colors"
           >
-            Logg inn
+            {isNo ? 'Logg inn' : 'Log in'}
           </button>
         </form>
       </div>
