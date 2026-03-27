@@ -205,17 +205,20 @@ export default function HaukIntranet() {
                 <h2 className="font-bold text-base mb-1">{selectedEmail.list[selectedEmail.index].subject}</h2>
                 <p className="text-xs text-[#888] mb-4">{t.from} {selectedEmail.list[selectedEmail.index].sender}</p>
                 <p className="text-sm text-[#333] leading-relaxed whitespace-pre-line mb-4">{selectedEmail.list[selectedEmail.index].body}</p>
-                {(selectedEmail.list[selectedEmail.index] as {attachment?: {name: string; path: string}}).attachment && (
-                  <a
-                    href={(selectedEmail.list[selectedEmail.index] as {attachment: {name: string; path: string}}).attachment.path}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 border border-[#d0d0d0] hover:border-[#003087] hover:bg-[#f0f4fc] transition-colors text-sm"
-                  >
-                    <span className="text-red-600">📄</span>
-                    <span className="text-[#003087] hover:underline">{(selectedEmail.list[selectedEmail.index] as {attachment: {name: string; path: string}}).attachment.name}</span>
-                  </a>
-                )}
+                {(selectedEmail.list[selectedEmail.index] as unknown as {attachment?: {name: string; path: string}}).attachment && (() => {
+                  const att = (selectedEmail.list[selectedEmail.index] as unknown as {attachment: {name: string; path: string}}).attachment;
+                  return (
+                    <a
+                      href={att.path}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 border border-[#d0d0d0] hover:border-[#003087] hover:bg-[#f0f4fc] transition-colors text-sm"
+                    >
+                      <span className="text-red-600">📄</span>
+                      <span className="text-[#003087] hover:underline">{att.name}</span>
+                    </a>
+                  );
+                })()}
               </div>
             ) : (
               <div>
