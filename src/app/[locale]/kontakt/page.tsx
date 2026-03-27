@@ -1,12 +1,11 @@
-import { useTranslations } from 'next-intl';
-import { setRequestLocale } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 
 export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = useTranslations('contact');
+  const t = await getTranslations({ locale, namespace: 'contact' });
   return (
     <div className="min-h-screen flex flex-col">
       <Header />

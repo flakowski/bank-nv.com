@@ -1,5 +1,4 @@
-import { useTranslations } from 'next-intl';
-import { setRequestLocale } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
@@ -7,7 +6,7 @@ import Footer from '@/components/footer';
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = useTranslations();
+  const t = await getTranslations({ locale });
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -35,8 +34,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           <div className="grid md:grid-cols-3 gap-5">
             {['bank', 'funds', 'mortgage'].map((key) => (
               <div key={key} className="bg-white border border-[#d0d0d0] p-6 hover:border-[#003087] transition-colors">
-                <h3 className="font-bold text-[#003087] mb-2">{t(`services.${key}`)}</h3>
-                <p className="text-sm text-[#555]">{t(`services.${key}Desc`)}</p>
+                <h3 className="font-bold text-[#003087] mb-2">{t(`services.${key}` as never)}</h3>
+                <p className="text-sm text-[#555]">{t(`services.${key}Desc` as never)}</p>
               </div>
             ))}
           </div>
