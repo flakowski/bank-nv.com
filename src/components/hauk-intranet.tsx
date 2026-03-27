@@ -65,6 +65,16 @@ const content = {
         body: 'Hei. Vi ønsker å invitere deg til en workshop om bærekraftig investering. Dette vil være en flott mulighet til å lære mer om hvordan vi kan investere ansvarlig for fremtiden.',
         read: true,
       },
+      {
+        subject: 'Her er forsikringen din',
+        sender: 'NVI Forsikring AS',
+        body: 'Hei, her er forsikringen din. Du leter litt, så finner du sikkert den teksten.',
+        read: false,
+        attachment: {
+          name: 'VILKÅR OG BETINGELSER FOR PREMIUM DIAMANTFORSIKRING.pdf',
+          path: '/documents/VILK%C3%85R%20OG%20BETINGELSER%20FOR%20PREMIUM%20DIAMANTFORSIKRING.pdf',
+        },
+      },
     ],
   },
   en: {
@@ -126,6 +136,16 @@ const content = {
         body: 'Hello. We would like to invite you to a workshop on sustainable investing. This will be a great opportunity to learn more about how we can invest responsibly for the future.',
         read: true,
       },
+      {
+        subject: 'Here is your insurance',
+        sender: 'NVI Insurance',
+        body: 'Hi, here\'s your insurance. Search a bit and you\'ll find the text.',
+        read: false,
+        attachment: {
+          name: 'VILKÅR OG BETINGELSER FOR PREMIUM DIAMANTFORSIKRING.pdf',
+          path: '/documents/VILK%C3%85R%20OG%20BETINGELSER%20FOR%20PREMIUM%20DIAMANTFORSIKRING.pdf',
+        },
+      },
     ],
   },
 };
@@ -184,7 +204,18 @@ export default function HaukIntranet() {
                 <button onClick={() => setSelectedEmail(null)} className="text-[#003087] text-xs mb-4 hover:underline">{t.back}</button>
                 <h2 className="font-bold text-base mb-1">{selectedEmail.list[selectedEmail.index].subject}</h2>
                 <p className="text-xs text-[#888] mb-4">{t.from} {selectedEmail.list[selectedEmail.index].sender}</p>
-                <p className="text-sm text-[#333] leading-relaxed whitespace-pre-line">{selectedEmail.list[selectedEmail.index].body}</p>
+                <p className="text-sm text-[#333] leading-relaxed whitespace-pre-line mb-4">{selectedEmail.list[selectedEmail.index].body}</p>
+                {(selectedEmail.list[selectedEmail.index] as {attachment?: {name: string; path: string}}).attachment && (
+                  <a
+                    href={(selectedEmail.list[selectedEmail.index] as {attachment: {name: string; path: string}}).attachment.path}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 border border-[#d0d0d0] hover:border-[#003087] hover:bg-[#f0f4fc] transition-colors text-sm"
+                  >
+                    <span className="text-red-600">📄</span>
+                    <span className="text-[#003087] hover:underline">{(selectedEmail.list[selectedEmail.index] as {attachment: {name: string; path: string}}).attachment.name}</span>
+                  </a>
+                )}
               </div>
             ) : (
               <div>
